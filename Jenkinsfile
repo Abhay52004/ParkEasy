@@ -26,11 +26,23 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        stage('Deploy Live to AWS') {
             steps {
-                echo 'Simulating: kubectl apply -f k8s/'
-                sleep 4
-                echo 'Deployment successful! Pods are running.'
+                echo 'Connecting to AWS EC2 Server...'
+                
+                // This tells Jenkins to use the private key we just saved!
+                sshagent(['aws-key']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no ubuntu@107.21.141.241 "
+                        cd ~ &&
+                        rm -rf ParkEasy &&
+                        git clone https://github.com/Abhay52004/ParkEasy.git &&
+                        cd ParkEasy &&
+                        sudo /usr/local/bin/docker-compose down &&
+                        sudo /usr/local/bin/docker-compose up --build -d
+                        "
+                    '''
+                }
             }
         }
     }
