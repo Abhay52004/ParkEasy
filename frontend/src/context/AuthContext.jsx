@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/user/profile');
+      const response = await axios.get('http://107.21.141.241:5000/api/user/profile');
       const userData = response.data;
       // Normalize ID field
       if (userData._id && !userData.id) {

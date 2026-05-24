@@ -177,7 +177,7 @@ const About = () => {
               <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-4xl mx-auto mb-4 shadow-xl">
                 P
               </div>
-              <h3 className="font-bold text-xl text-gray-900 dark:text-white">ParkEasy Team</h3>
+              <h3 className="font-bold text-xl text-gray-900 dark:text-white">Abhay Kumar Singh</h3>
               <p className="text-gray-600 dark:text-gray-400">Lovely Professional University</p>
             </div>
           </div>

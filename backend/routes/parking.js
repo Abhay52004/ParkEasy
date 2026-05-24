@@ -211,8 +211,9 @@ router.post('/:id/book', authenticateToken, [
 
     // Determine price based on vehicle type
     let pricePerHour = spot.pricePerHour || 0;
-    if (spot.pricing && spot.pricing[vehicleType] && spot.pricing[vehicleType].hourly) {
-      pricePerHour = spot.pricing[vehicleType].hourly;
+    const vType = vehicleType.toLowerCase();
+    if (spot.pricing && spot.pricing[vType] && spot.pricing[vType].hourly) {
+      pricePerHour = spot.pricing[vType].hourly;
     }
 
     // Update availability

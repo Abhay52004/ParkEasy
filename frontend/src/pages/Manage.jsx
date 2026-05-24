@@ -31,13 +31,13 @@ const Manage = () => {
     try {
       const token = localStorage.getItem('token');
       const [spotsRes, usersRes, bookingsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/parking', {
+        axios.get('http://107.21.141.241:5000/api/parking', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/user/all', {
+        axios.get('http://107.21.141.241:5000/api/user/all', {
           headers: { Authorization: `Bearer ${token}` }
         }).catch(() => ({ data: [] })),
-        axios.get('http://localhost:5000/api/parking/bookings/all', {
+        axios.get('http://107.21.141.241:5000/api/parking/bookings/all', {
           headers: { Authorization: `Bearer ${token}` }
         }).catch(() => ({ data: [] }))
       ]);
@@ -57,7 +57,7 @@ const Manage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/user/${userId}`, {
+      await axios.delete(`http://107.21.141.241:5000/api/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchData();
@@ -73,7 +73,7 @@ const Manage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/parking/${spotId}`, {
+      await axios.delete(`http://107.21.141.241:5000/api/parking/${spotId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchData();
@@ -112,7 +112,7 @@ const Manage = () => {
       };
 
       await axios.put(
-        `http://localhost:5000/api/parking/${editingSpot}`,
+        `http://107.21.141.241:5000/api/parking/${editingSpot}`,
         updateData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

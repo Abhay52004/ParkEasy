@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # 1. Scrape Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # 2. Scrape the ParkEasy Node.js Backend API
+  - job_name: 'parkeasy-backend'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['backend-service:5000']
+    
+  # 3. Scrape the Cloud Server Health (Node Exporter)
+  # This monitors AWS EC2 CPU, RAM, and Disk space!
+  - job_name: 'ec2-server-health'
+    static_configs:
+      - targets: ['localhost:9100']

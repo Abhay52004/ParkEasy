@@ -1,0 +1,13 @@
+@echo off
+set PATH=C:\Program Files\nodejs;%PATH%
+cd backend
+echo Installing backend dependencies...
+call npm install
+echo Seeding database...
+call npm run seed
+cd ..
+cd frontend
+echo Installing frontend dependencies...
+call npm install
+echo Starting frontend...
+call npm run dev

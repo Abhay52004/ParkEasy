@@ -127,10 +127,10 @@ const Contact = () => {
               Mon-Sat, 9AM to 6PM
             </p>
             <a
-              href="tel:+917004545150"
+              href="tel:+917217390507"
               className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
             >
-              +91 7004545150
+              +91 7217390507
             </a>
           </div>
 

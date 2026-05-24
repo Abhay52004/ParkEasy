@@ -33,7 +33,7 @@ const ParkingSpots = () => {
   const [bookingCost, setBookingCost] = useState(0);
   const [spotsToBook, setSpotsToBook] = useState(1);
 
-  const [selectedVehicleType, setSelectedVehicleType] = useState('car');
+  const [selectedVehicleType, setSelectedVehicleType] = useState('Car');
 
   // Search States
   const [searchQuery, setSearchQuery] = useState('');
@@ -76,8 +76,9 @@ const ParkingSpots = () => {
         const durationHours = durationMs / (1000 * 60 * 60);
 
         let hourlyRate = bookingSpot.pricePerHour || 0;
-        if (bookingSpot.pricing && bookingSpot.pricing[selectedVehicleType] && bookingSpot.pricing[selectedVehicleType].hourly) {
-          hourlyRate = bookingSpot.pricing[selectedVehicleType].hourly;
+        const vType = selectedVehicleType.toLowerCase();
+        if (bookingSpot.pricing && bookingSpot.pricing[vType] && bookingSpot.pricing[vType].hourly) {
+          hourlyRate = bookingSpot.pricing[vType].hourly;
         }
 
         setBookingCost(Math.max(0, durationHours * hourlyRate * spotsToBook));
@@ -91,7 +92,7 @@ const ParkingSpots = () => {
     try {
       setError(null);
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/parking');
+      const response = await axios.get('http://107.21.141.241:5000/api/parking');
       setSpots(response.data || []);
     } catch (error) {
       console.error('Error fetching parking spots:', error);
@@ -135,7 +136,7 @@ const ParkingSpots = () => {
         pricePerMonth: 0
       };
 
-      await axios.post('http://localhost:5000/api/parking', spotData, {
+      await axios.post('http://107.21.141.241:5000/api/parking', spotData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -181,7 +182,7 @@ const ParkingSpots = () => {
       };
 
       const response = await axios.post(
-        `http://localhost:5000/api/parking/${bookingSpot._id}/book`,
+        `http://107.21.141.241:5000/api/parking/${bookingSpot._id}/book`,
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -189,7 +190,7 @@ const ParkingSpots = () => {
       setBookingStart('');
       setBookingEnd('');
       setSpotsToBook(1);
-      setSelectedVehicleType('car');
+      setSelectedVehicleType('Car');
       fetchSpots();
 
       // Show entry code in the success message
@@ -207,7 +208,7 @@ const ParkingSpots = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/parking/${spotId}/release`,
+        `http://107.21.141.241:5000/api/parking/${spotId}/release`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -223,7 +224,7 @@ const ParkingSpots = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/parking/${spotId}`, {
+      await axios.delete(`http://107.21.141.241:5000/api/parking/${spotId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchSpots();
@@ -261,7 +262,7 @@ const ParkingSpots = () => {
       };
 
       await axios.put(
-        `http://localhost:5000/api/parking/${editingSpot}`,
+        `http://107.21.141.241:5000/api/parking/${editingSpot}`,
         updateData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -830,10 +831,10 @@ const ParkingSpots = () => {
                       onChange={(e) => setSelectedVehicleType(e.target.value)}
                       className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:border-green-500 text-black dark:text-white"
                     >
-                      <option value="bike">🏍️ Bike - ₹{bookingSpot.pricing?.bike?.hourly || 20}/hr</option>
-                      <option value="car">🚗 Car - ₹{bookingSpot.pricing?.car?.hourly || 40}/hr</option>
-                      <option value="bus">🚌 Bus - ₹{bookingSpot.pricing?.bus?.hourly || 100}/hr</option>
-                      <option value="truck">🚚 Truck - ₹{bookingSpot.pricing?.truck?.hourly || 80}/hr</option>
+                      <option value="Bike">🏍️ Bike - ₹{bookingSpot.pricing?.bike?.hourly || bookingSpot.pricePerHour || 20}/hr</option>
+                      <option value="Car">🚗 Car - ₹{bookingSpot.pricing?.car?.hourly || bookingSpot.pricePerHour || 40}/hr</option>
+                      <option value="Bus">🚌 Bus - ₹{bookingSpot.pricing?.bus?.hourly || bookingSpot.pricePerHour || 100}/hr</option>
+                      <option value="Truck">🚚 Truck - ₹{bookingSpot.pricing?.truck?.hourly || bookingSpot.pricePerHour || 80}/hr</option>
                     </select>
                   </div>
 
