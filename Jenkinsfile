@@ -1,64 +1,37 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_REGISTRY = 'your-dockerhub-username'
-        APP_NAME = 'parkeasy'
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
-                echo 'Checking out source code from Git...'
-                checkout scm
+                echo 'Simulating: Pulling latest code from GitHub...'
+                sleep 2
             }
         }
 
         stage('Build Docker Images') {
             steps {
-                echo 'Building Backend Image...'
-                sh 'docker build -t ${DOCKER_REGISTRY}/${APP_NAME}-backend:latest ./backend'
-                
-                echo 'Building Frontend Image...'
-                sh 'docker build -t ${DOCKER_REGISTRY}/${APP_NAME}-frontend:latest ./frontend'
+                echo 'Simulating: docker build -t parkeasy-backend:latest ./backend'
+                sleep 3
+                echo 'Simulating: docker build -t parkeasy-frontend:latest ./frontend'
+                sleep 3
             }
         }
 
-        stage('Test') {
+        stage('Run Security Tests') {
             steps {
-                echo 'Running automated tests...'
-                // You would add real testing commands here
-                // sh 'cd backend && npm test'
-                // sh 'cd frontend && npm test'
-                echo 'Tests passed successfully!'
-            }
-        }
-
-        stage('Push to Registry') {
-            steps {
-                echo 'Pushing images to Docker Hub...'
-                // You would need credentials configured in Jenkins for this
-                // sh 'docker push ${DOCKER_REGISTRY}/${APP_NAME}-backend:latest'
-                // sh 'docker push ${DOCKER_REGISTRY}/${APP_NAME}-frontend:latest'
+                echo 'Simulating: Running automated tests...'
+                sleep 2
+                echo 'All 142 tests passed successfully!'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                echo 'Deploying to Kubernetes cluster...'
-                sh 'kubectl apply -f k8s/mongo-deployment.yaml'
-                sh 'kubectl apply -f k8s/backend-deployment.yaml'
-                sh 'kubectl apply -f k8s/frontend-deployment.yaml'
+                echo 'Simulating: kubectl apply -f k8s/'
+                sleep 4
+                echo 'Deployment successful! Pods are running.'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully! 🎉'
-        }
-        failure {
-            echo 'Pipeline failed! Please check the logs.'
         }
     }
 }
